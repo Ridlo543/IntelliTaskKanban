@@ -1,0 +1,43 @@
+[
+  {
+    "id": "30747bf4-7b9d-46f7-833a-cb71e48b9087",
+    "boardName": "todo",
+    "card": [
+      {
+        "id": "ccd13705-79f4-41dc-835e-24f9692fbd6c",
+        "title": "daa",
+        "tags": [],
+        "task": [],
+        "dateline": "2023-12-31T21:30:11.482Z",
+        "tingkatKemampuan": 5,
+        "tingkatKesulitan": 5,
+        "tingkatUrgensi": 5,
+        "durasiPengerjaan": 1
+      },
+      {
+        "id": "bad0d43d-d909-4a39-8345-7a67e10b2c37",
+        "title": "pbo",
+        "tags": [],
+        "task": [],
+        "dateline": "2023-12-31T21:30:34.072Z",
+        "tingkatKemampuan": 5,
+        "tingkatKesulitan": 5,
+        "tingkatUrgensi": 5,
+        "durasiPengerjaan": 1
+      }
+    ],
+    "limit": "5"
+  },
+  {
+    "id": "4104f159-fe30-42bf-b687-c73d2667c1c7",
+    "boardName": "progress",
+    "card": [],
+    "limit": "3"
+  },
+  {
+    "id": "859db296-aea9-4b6d-a5d1-6ee1805904b6",
+    "boardName": "done",
+    "card": [],
+    "limit": "10"
+  }
+]
