@@ -1,3 +1,5 @@
+/* Navbar.css */
+
 .navbar {
   padding-inline: 2rem;
   border-bottom: 1px solid #ccc;
@@ -6,14 +8,18 @@
   align-items: center;
   justify-content: space-between;
   color: var(--text-color);
+  transition: background-color 200ms;
 }
+
 .checkbox {
   opacity: 0;
   position: absolute;
 }
+
 .dark {
   background-color: #292c35;
 }
+
 .label {
   width: 36px;
   height: 11px !important;
@@ -38,15 +44,55 @@
   transition: transform 0.2s linear;
 }
 
-/*  target the elemenent after the label*/
 .checkbox:checked + .label .ball {
   transform: translateX(24px);
 }
 
-.fa-moon {
-  color: pink;
+.theme-icon {
+  font-size: 18px;
+  color: #ffc107; 
 }
 
-.fa-sun {
-  color: yellow;
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 30px; /* Sesuaikan sesuai kebutuhan */
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.dropdown-content select {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.dropdown-content button {
+  background-color: #0079bf;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dropdown-content button:hover {
+  background-color: #0056b3;
 }

@@ -46,7 +46,9 @@ const Editable = (props) => {
                 className="close"
                 onClick={() => {
                   setShow(false);
-                  props?.setHandler(false);
+                  if (props?.setHandler) {
+                    props.setHandler(false);
+                  }
                 }}
               />
             </div>

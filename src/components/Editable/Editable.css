@@ -1,30 +1,33 @@
 .editable {
   height: auto;
 }
+
 .editable > p {
   width: 90%;
   display: flex;
+  align-items: center;
   gap: 5px;
   border-radius: 5px;
   padding: 0.5rem;
-  transition: ease-in-out 200ms;
+  transition: background-color 200ms ease-in-out;
   margin-inline: auto;
+  cursor: pointer;
 }
+
 .editable > p:hover {
   background-color: #ccc;
   color: #000;
-  cursor: pointer;
 }
+
 .editable__input {
   display: flex;
   flex-direction: column;
   padding-inline: 0.5rem;
   gap: 10px;
 }
+
 .editable__input > textarea {
-  width: 98% !important;
-  -webkit-appearance: none;
-  appearance: none;
+  width: 100%;
   background-color: #fafbfc;
   border: none;
   border-radius: 3px;
@@ -35,20 +38,30 @@
   margin-bottom: 12px;
   outline: none;
   padding: 8px 12px;
-  transition-duration: 85ms;
-  transition-property: background-color, border-color, box-shadow;
-  transition-timing-function: ease;
+  transition: background-color 85ms ease;
 }
+
 .editable__input > textarea:focus {
   border: none;
   outline: none;
 }
+
+.limit__input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #dfe1e6;
+  border-radius: 3px;
+  outline: none;
+  transition: background-color 85ms ease;
+}
+
 .btn__control {
   display: flex;
   gap: 5px;
   align-items: center;
   padding-inline: 0.1rem;
 }
+
 .btn__control > button {
   background-color: #0079bf;
   height: 2rem;
@@ -57,11 +70,15 @@
   border: none;
   border-radius: 3px;
   margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 200ms ease;
 }
+
 .btn__control > button:hover {
   background-color: #026aa7;
-  cursor: pointer;
 }
+
 .close:hover {
   cursor: pointer;
+  color: #bf0019;
 }

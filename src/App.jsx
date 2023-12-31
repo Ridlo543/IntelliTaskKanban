@@ -6,6 +6,7 @@ import useLocalStorage from "use-local-storage";
 import Editable from "./components/Editable/Editable";
 import Navbar from "./components/Navbar/Navbar";
 import Board from "./components/Board/Board";
+import { sortCardsByName } from "./utils/algorithm";
 
 import "./App.css";
 import "../bootstrap.css";
@@ -16,6 +17,7 @@ function App() {
       ? JSON.parse(localStorage.getItem("data-kanban"))
       : []
   );
+  const [sortOrder, setSortOrder] = useState("asc");
 
   const defaultDark = window.matchMedia(
     "(prefers-colors-scheme: dark)"
@@ -106,26 +108,40 @@ function App() {
     setData(tempData);
   };
 
-  // const onDragEnd = (result) => {
-  //   const { source, destination } = result;
-  //   if (!destination) return;
-
-  //   if (source.droppableId === destination.droppableId) return;
-
-  //   setData(dragCardInBoard(source, destination));
-  // };
-
   const onDragEnd = (result) => {
     const { source, destination } = result;
 
     if (!destination) return;
 
+    // Mendapatkan indeks dari board sumber dan tujuan
+    const sourceBoardIdx = data.findIndex(
+      (item) => item.id.toString() === source.droppableId
+    );
+    const destinationBoardIdx = data.findIndex(
+      (item) => item.id.toString() === destination.droppableId
+    );
+
+    // Mengecek apakah penambahan kartu akan melebihi batas yang ditetapkan
+    if (
+      destinationBoardIdx >= 0 &&
+      data[destinationBoardIdx].card.length >= data[destinationBoardIdx].limit
+    ) {
+      // Jika melebihi batas, berhenti di sini atau lakukan penanganan yang sesuai
+      return;
+    }
+
     if (source.droppableId === destination.droppableId) {
       // Jika sumber dan tujuan memiliki droppableId yang sama, panggil fungsi dragCardInSameBoard
       dragCardInSameBoard(source, destination);
     } else {
-      // Jika sumber dan tujuan memiliki droppableId yang berbeda, panggil fungsi dragCardInBoard
-      setData(dragCardInBoard(source, destination));
+      // Jika sumber dan tujuan memiliki droppableId yang berbeda, cek batas sebelum memindahkan kartu
+      if (
+        destinationBoardIdx >= 0 &&
+        data[destinationBoardIdx].card.length < data[destinationBoardIdx].limit
+      ) {
+        // Hanya pindahkan kartu jika belum mencapai batas
+        setData(dragCardInBoard(source, destination));
+      }
     }
   };
 
@@ -144,6 +160,25 @@ function App() {
     setData(tempBoards);
   };
 
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  const filterAndSortData = () => {
+    // Menyalin data asli
+    let sortedData = [...data];
+
+    // Mengurutkan data berdasarkan nama kartu
+    sortedData.forEach((board) => {
+      board.card = sortCardsByName(board.card, sortOrder);
+    });
+
+    // Mengembalikan data yang telah diurutkan
+    return sortedData;
+  };
+
+  const sortedData = filterAndSortData();
+
   useEffect(() => {
     localStorage.setItem("data-kanban", JSON.stringify(data));
   }, [data]);
@@ -151,10 +186,10 @@ function App() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App" data-theme={theme}>
-        <Navbar switchTheme={switchTheme} />
+        <Navbar switchTheme={switchTheme} handleSortChange={handleSortChange} />
         <div className="app_outer">
           <div className="app_boards">
-            {data.map((item) => (
+            {sortedData.map((item) => (
               <Board
                 key={item.id}
                 id={item.id}
