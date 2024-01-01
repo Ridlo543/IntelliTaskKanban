@@ -62,30 +62,36 @@ body {
   width: fit-content;
 }
 
-
-
 .task-container {
   padding: 10px;
   display: flex;
   flex-direction: row; /* Menyusun secara horizontal */
   align-items: flex-start; /* Mencegah perataan vertikal */
+  color: var(--text-color); /* Sesuaikan dengan warna teks tema Anda */
+  background-color: var(
+    --board-color
+  ); /* Sesuaikan dengan warna papan tema Anda */
 }
 
 .task-container h3 {
   margin-right: 20px;
+  color: var(--text-color); /* Sesuaikan dengan warna teks tema Anda */
 }
+
 .task-list {
   display: flex;
-  flex-direction: horizontal; /* Menyusun secara vertikal di dalam setiap list */
+  flex-direction: row; /* Menyusun secara horizontal */
   gap: 10px;
-  margin-right: 20px; /* Jarak antara Progress dan Todo lists */
 }
 
 .task-item {
-  background-color: #ccc;
-  padding: 5px 5px;
+  background-color: var(
+    --card-color
+  ); /* Sesuaikan dengan warna kartu tema Anda */
+  padding: 5px 10px;
   border-radius: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  box-shadow: 0 0 5px var(--card-box-shadow); /* Sesuaikan dengan bayangan kartu tema Anda */
 }
