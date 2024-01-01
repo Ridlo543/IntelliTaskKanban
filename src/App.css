@@ -75,23 +75,25 @@ body {
 
 .task-container h3 {
   margin-right: 20px;
+  margin-left: 10px;
   color: var(--text-color); /* Sesuaikan dengan warna teks tema Anda */
 }
 
 .task-list {
   display: flex;
-  flex-direction: row; /* Menyusun secara horizontal */
+  flex-direction: row; 
   gap: 10px;
+  overflow-x: auto;
 }
 
 .task-item {
   background-color: var(
     --card-color
-  ); /* Sesuaikan dengan warna kartu tema Anda */
+  ); 
   padding: 5px 10px;
   border-radius: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  box-shadow: 0 0 5px var(--card-box-shadow); /* Sesuaikan dengan bayangan kartu tema Anda */
+  box-shadow: 0 0 5px var(--card-box-shadow); 
 }
