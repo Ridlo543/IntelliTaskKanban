@@ -1,3 +1,5 @@
+// app.jsx
+
 import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
@@ -6,7 +8,6 @@ import useLocalStorage from "use-local-storage";
 import Editable from "./components/Editable/Editable";
 import Navbar from "./components/Navbar/Navbar";
 import Board from "./components/Board/Board";
-import { sortCardsByName } from "./utils/algorithm";
 
 import "./App.css";
 import "../bootstrap.css";
@@ -17,7 +18,16 @@ function App() {
       ? JSON.parse(localStorage.getItem("data-kanban"))
       : []
   );
-  const [sortOrder, setSortOrder] = useState("asc");
+
+  const [selectedGreedyOption, setSelectedGreedyOption] = useState("Weight");
+  const [greedyResults, setGreedyResults] = useState({
+    progressTasks: [],
+    todoTasks: [],
+  });
+  const handleGreedyOptionChange = (event) => {
+    setSelectedGreedyOption(event.target.value);
+    applyGreedyAlgorithm(event.target.value);
+  };
 
   const defaultDark = window.matchMedia(
     "(prefers-colors-scheme: dark)"
@@ -35,6 +45,13 @@ function App() {
     const index = data.findIndex((item) => item.id === bid);
     const tempData = [...data];
     tempData[index].boardName = title;
+    setData(tempData);
+  };
+
+  const setLimit = (limit, bid) => {
+    const index = data.findIndex((item) => item.id === bid);
+    const tempData = [...data];
+    tempData[index].limit = limit;
     setData(tempData);
   };
 
@@ -58,27 +75,52 @@ function App() {
 
   const dragCardInSameBoard = (source, destination) => {
     let tempData = Array.from(data);
-    // console.log("Data", tempData);
-    const index = tempData.findIndex(
-      (item) => item.id.toString() === source.droppableId
-    );
-    // console.log(tempData[index], index);
-    let [removedCard] = tempData[index].card.splice(source.index, 1);
-    tempData[index].card.splice(destination.index, 0, removedCard);
+    let [removedCard] = tempData[0].card.splice(source.index, 1);
+    tempData[0].card.splice(destination.index, 0, removedCard);
     setData(tempData);
   };
+
+  // ...
 
   const addCard = (title, bid) => {
     const index = data.findIndex((item) => item.id === bid);
     const tempData = [...data];
-    tempData[index].card.push({
+
+    const newCard = {
       id: uuidv4(),
       title: title,
       tags: [],
       task: [],
       dateline: new Date(),
-    });
+      tingkatKemampuan: "5",
+      tingkatKesulitan: "5",
+      tingkatUrgensi: "5",
+      durasiPengerjaan: "1",
+    };
+
+    newCard.profit = calculateProfit(newCard);
+    tempData[index].card.push(newCard);
     setData(tempData);
+  };
+
+  const updateCard = (bid, cid, card) => {
+    const index = data.findIndex((item) => item.id === bid);
+    if (index < 0) return;
+
+    const tempBoards = [...data];
+    const cards = tempBoards[index].card;
+
+    const cardIndex = cards.findIndex((item) => item.id === cid);
+    if (cardIndex < 0) return;
+
+    // Update card properties
+    tempBoards[index].card[cardIndex] = {
+      ...card,
+      profit: calculateProfit(card),
+    };
+
+    console.log(tempBoards);
+    setData(tempBoards);
   };
 
   const removeCard = (boardId, cardId) => {
@@ -145,39 +187,62 @@ function App() {
     }
   };
 
-  const updateCard = (bid, cid, card) => {
-    const index = data.findIndex((item) => item.id === bid);
-    if (index < 0) return;
+  const calculateProfit = (task) => {
+    const currentDate = new Date();
+    const daysLeft = Math.max(
+      1,
+      (new Date(task.dateline) - currentDate) / (1000 * 60 * 60 * 24)
+    );
 
-    const tempBoards = [...data];
-    const cards = tempBoards[index].card;
-
-    const cardIndex = cards.findIndex((item) => item.id === cid);
-    if (cardIndex < 0) return;
-
-    tempBoards[index].card[cardIndex] = card;
-    console.log(tempBoards);
-    setData(tempBoards);
+    const profit =
+      (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan);
+    return profit;
   };
 
-  const handleSortChange = (event) => {
-    setSortOrder(event.target.value);
+  const calculateProfitDensity = (task) => {
+    const density = calculateProfit(task) / task.durasiPengerjaan;
+    console.log(density);
+    return density;
   };
 
-  const filterAndSortData = () => {
-    // Menyalin data asli
-    let sortedData = [...data];
+  const applyGreedyAlgorithm = (greedyOption) => {
+    // Sort tasks based on the selected greedy option
+    const sortedTasks = data
+      .flatMap((board) => board.card)
+      .sort((a, b) => {
+        if (greedyOption === "Weight") {
+          return b.tingkatKemampuan - a.tingkatKemampuan;
+        } else if (greedyOption === "Profit") {
+          return b.profit - a.profit;
+        } else if (greedyOption === "Density") {
+          return calculateProfitDensity(b) - calculateProfitDensity(a);
+        }
+        return 0;
+      });
 
-    // Mengurutkan data berdasarkan nama kartu
-    sortedData.forEach((board) => {
-      board.card = sortCardsByName(board.card, sortOrder);
+    // Reset progress and todo tasks
+    setGreedyResults({
+      progressTasks: [],
+      todoTasks: [],
     });
 
-    // Mengembalikan data yang telah diurutkan
-    return sortedData;
+    // Distribute tasks to progress and todo based on capacity (8 hours)
+    let remainingCapacity = 8; // 8 hours
+    sortedTasks.forEach((task) => {
+      if (remainingCapacity >= task.durasiPengerjaan) {
+        setGreedyResults((prev) => ({
+          ...prev,
+          progressTasks: [...prev.progressTasks, task],
+        }));
+        remainingCapacity -= task.durasiPengerjaan;
+      } else {
+        setGreedyResults((prev) => ({
+          ...prev,
+          todoTasks: [...prev.todoTasks, task],
+        }));
+      }
+    });
   };
-
-  const sortedData = filterAndSortData();
 
   useEffect(() => {
     localStorage.setItem("data-kanban", JSON.stringify(data));
@@ -186,16 +251,23 @@ function App() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App" data-theme={theme}>
-        <Navbar switchTheme={switchTheme} handleSortChange={handleSortChange} />
+        <Navbar
+          switchTheme={switchTheme}
+          theme={theme}
+          handleGreedyOptionChange={handleGreedyOptionChange}
+          applyGreedyAlgorithm={applyGreedyAlgorithm}
+        />
+
         <div className="app_outer">
           <div className="app_boards">
-            {sortedData.map((item) => (
+            {data.map((item) => (
               <Board
                 key={item.id}
                 id={item.id}
                 name={item.boardName}
                 card={item.card}
                 setName={setName}
+                setLimit={setLimit} // Tambahkan prop setLimit di sini
                 addCard={addCard}
                 removeCard={removeCard}
                 removeBoard={removeBoard}
@@ -213,9 +285,28 @@ function App() {
             />
           </div>
         </div>
+        {/* Tampilkan progress tasks */}
+        <div className="task-container">
+          <h3>PROGRESS:</h3>
+          <div className="task-list">
+            {greedyResults.progressTasks.map((task) => (
+              <div key={task.id} className="task-item">
+                {task.title}
+              </div>
+            ))}
+          </div>
+          <h3>TODO:</h3>
+          <div className="task-list">
+            {greedyResults.todoTasks.map((task) => (
+              <div key={task.id} className="task-item">
+                {task.title}
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     </DragDropContext>
   );
 }
-
 export default App;

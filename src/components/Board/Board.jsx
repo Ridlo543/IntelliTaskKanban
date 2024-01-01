@@ -14,6 +14,12 @@ export default function Board(props) {
   const [show, setShow] = useState(false);
   const [dropdown, setDropdown] = useState(false);
   const [addCardModalShow, setAddCardModalShow] = useState(false); // State untuk menampilkan modal
+  const [editLimit, setEditLimit] = useState(false);
+
+  const handleEditLimit = () => {
+    setEditLimit(true);
+    setShow(true); // Aktifkan mode show agar input limit muncul
+  };
 
   const handleKeyPress = (e) => {
     if (e.code === "Enter") setShow(false);
@@ -47,14 +53,16 @@ export default function Board(props) {
                 props.setName(e.target.value, props.id);
               }}
             />
-            {/* <input
+
+            <input
               className="limit__input"
-              type="number"
-              placeholder="Set card limit"
+              type={"text"}
+              defaultValue={props.limit}
               onChange={(e) => {
-                props.setLimit(e.target.value, props.id);
+                props.setLimit(parseInt(e.target.value) || 0, props.id);
+                setEditLimit(false);
               }}
-            /> */}
+            />
           </div>
         ) : (
           <div>
@@ -62,11 +70,13 @@ export default function Board(props) {
               onClick={() => {
                 setShow(true);
               }}
+              onDoubleClick={handleEditLimit}
               className="board__title"
             >
               {props?.name || "Name of Board"}
               <span className="total__cards">
-                {props.card?.length} / {props.limit}
+                {props.card && props.card.length ? props.card.length : 0} /{" "}
+                {props.limit}
               </span>
             </p>
           </div>

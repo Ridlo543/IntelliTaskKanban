@@ -61,3 +61,31 @@ body {
 .cardinfo__editable {
   width: fit-content;
 }
+
+
+
+.task-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: row; /* Menyusun secara horizontal */
+  align-items: flex-start; /* Mencegah perataan vertikal */
+}
+
+.task-container h3 {
+  margin-right: 20px;
+}
+.task-list {
+  display: flex;
+  flex-direction: horizontal; /* Menyusun secara vertikal di dalam setiap list */
+  gap: 10px;
+  margin-right: 20px; /* Jarak antara Progress dan Todo lists */
+}
+
+.task-item {
+  background-color: #ccc;
+  padding: 5px 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

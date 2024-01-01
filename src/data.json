@@ -1,43 +1,52 @@
 [
   {
-    "id": "30747bf4-7b9d-46f7-833a-cb71e48b9087",
+    "id": "f7e20dce-5452-493f-8aac-f5ce615beb1b",
     "boardName": "todo",
     "card": [
       {
-        "id": "ccd13705-79f4-41dc-835e-24f9692fbd6c",
-        "title": "daa",
+        "id": "40c33629-b8e4-45b3-bdab-708329f2e5e8",
+        "title": "DAA",
         "tags": [],
         "task": [],
-        "dateline": "2023-12-31T21:30:11.482Z",
-        "tingkatKemampuan": 5,
-        "tingkatKesulitan": 5,
-        "tingkatUrgensi": 5,
-        "durasiPengerjaan": 1
+        "dateline": "2024-01-03T11:32:45.000Z",
+        "tingkatKemampuan": "5",
+        "tingkatKesulitan": "5",
+        "tingkatUrgensi": "5",
+        "durasiPengerjaan": "1",
+        "profit": 0.5000109551011344
       },
       {
-        "id": "bad0d43d-d909-4a39-8345-7a67e10b2c37",
-        "title": "pbo",
+        "id": "c7c1f986-1c64-42d4-b21a-341101d6c331",
+        "title": "PBO",
         "tags": [],
         "task": [],
-        "dateline": "2023-12-31T21:30:34.072Z",
-        "tingkatKemampuan": 5,
-        "tingkatKesulitan": 5,
-        "tingkatUrgensi": 5,
-        "durasiPengerjaan": 1
+        "dateline": "2024-01-02T11:32:12.000Z",
+        "tingkatKemampuan": "4",
+        "tingkatKesulitan": "6",
+        "tingkatUrgensi": "4",
+        "durasiPengerjaan": "5",
+        "profit": 0.6666666666666666
       }
     ],
     "limit": "5"
   },
   {
-    "id": "4104f159-fe30-42bf-b687-c73d2667c1c7",
+    "id": "942b7438-96cb-4a47-9a5a-60ba27df3342",
     "boardName": "progress",
-    "card": [],
-    "limit": "3"
-  },
-  {
-    "id": "859db296-aea9-4b6d-a5d1-6ee1805904b6",
-    "boardName": "done",
-    "card": [],
+    "card": [
+      {
+        "id": "9611d9ce-8be3-4de8-9537-7cd978dee7ab",
+        "title": "cek",
+        "tags": [],
+        "task": [],
+        "dateline": "2024-01-05T11:37:08.000Z",
+        "tingkatKemampuan": "5",
+        "tingkatKesulitan": "5",
+        "tingkatUrgensi": "5",
+        "durasiPengerjaan": "1",
+        "profit": 0.25104589964000834
+      }
+    ],
     "limit": "10"
   }
 ]

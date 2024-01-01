@@ -29,10 +29,10 @@ export default function CardDetails(props) {
     ...props.card,
     dateline: props.card.dateline ? new Date(props.card.dateline) : new Date(),
     // Tambahkan isian yang diminta
-    tingkatKemampuan: 5, // Misalnya nilai awal
-    tingkatKesulitan: 5, // Misalnya nilai awal
-    tingkatUrgensi: 5, // Misalnya nilai awal
-    durasiPengerjaan: 1, // Misalnya nilai awal
+    // tingkatKemampuan: 5, // Misalnya nilai awal
+    // tingkatKesulitan: 5, // Misalnya nilai awal
+    // tingkatUrgensi: 5, // Misalnya nilai awal
+    // durasiPengerjaan: 1, // Misalnya nilai awal
   });
   const [input, setInput] = useState(false);
   const [text, setText] = useState(values.title);
