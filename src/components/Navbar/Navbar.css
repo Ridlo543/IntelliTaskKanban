@@ -50,7 +50,20 @@
 
 .theme-icon {
   font-size: 18px;
-  color: #ffc107; 
+  color: #ffc107;
+}
+
+.filter-dropdown,
+.manual-capacity {
+  display: flex;
+  align-items: center;
+}
+
+.filter-dropdown select,
+.filter-dropdown button,
+.manual-capacity input,
+.manual-capacity button {
+  margin-left: 10px;
 }
 
 .dropdown {

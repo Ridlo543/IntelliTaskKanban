@@ -19,14 +19,89 @@ function App() {
       : []
   );
 
+  ///////////////////////////////////////////////////
+  // Algoritma Greedy
+
+  // State untuk pilihan algoritma Greedy dan hasil distribusi tasks
   const [selectedGreedyOption, setSelectedGreedyOption] = useState("Weight");
   const [greedyResults, setGreedyResults] = useState({
     progressTasks: [],
     todoTasks: [],
   });
+
+  // Fungsi untuk mengubah pilihan algoritma Greedy dan menerapkan algoritma tersebut
   const handleGreedyOptionChange = (event) => {
     setSelectedGreedyOption(event.target.value);
     applyGreedyAlgorithm(event.target.value);
+  };
+
+  // Fungsi untuk menghitung profit suatu task berdasarkan batas waktu dan tingkat kesulitan
+  const calculateProfit = (task) => {
+    // Menghitung selisih hari antara tanggal batas waktu dan tanggal saat ini
+    const currentDate = new Date();
+    const daysLeft = Math.max(
+      1,
+      (new Date(task.dateline) - currentDate) / (1000 * 60 * 60 * 24)
+    );
+
+    // Menghitung profit berdasarkan formula yang diberikan
+    const profit =
+      (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan);
+    return profit;
+  };
+
+  // Fungsi untuk menghitung density (profit per unit waktu) suatu task
+  const calculateProfitDensity = (task) => {
+    // Menghitung density berdasarkan profit dan durasi pengerjaan task
+    const density = calculateProfit(task) / task.durasiPengerjaan;
+    console.log(density); // Log ke konsol untuk debug atau pemantauan
+    return density;
+  };
+
+  /**
+   * Function untuk menerapkan algoritma Greedy pada tasks.
+   * @param {string} greedyOption - Pilihan algoritma Greedy ("Weight", "Profit", atau "Density").
+   * @param {number} manualCapacity - Kapasitas pengerjaan manual (opsional), default: 8 jam.
+   */
+  const applyGreedyAlgorithm = (greedyOption, manualCapacity) => {
+    // Mengurutkan tasks berdasarkan pilihan algoritma Greedy
+    const sortedTasks = data
+      .flatMap((board) => board.card)
+      .sort((a, b) => {
+        if (greedyOption === "Weight") {
+          return b.tingkatKemampuan - a.tingkatKemampuan;
+        } else if (greedyOption === "Profit") {
+          return b.profit - a.profit;
+        } else if (greedyOption === "Density") {
+          return calculateProfitDensity(b) - calculateProfitDensity(a);
+        }
+        return 0;
+      });
+
+    // Mengatur ulang tasks progress dan todo
+    setGreedyResults({
+      progressTasks: [],
+      todoTasks: [],
+    });
+
+    // Mendistribusikan tasks ke progress dan todo berdasarkan kapasitas (8 jam)
+    let remainingCapacity = manualCapacity || 8; // default 8 jam
+    sortedTasks.forEach((task) => {
+      if (remainingCapacity >= task.durasiPengerjaan) {
+        // Jika masih ada kapasitas, tambahkan task ke progressTasks
+        setGreedyResults((prev) => ({
+          ...prev,
+          progressTasks: [...prev.progressTasks, task],
+        }));
+        remainingCapacity -= task.durasiPengerjaan;
+      } else {
+        // Jika kapasitas telah terpenuhi, tambahkan task ke todoTasks
+        setGreedyResults((prev) => ({
+          ...prev,
+          todoTasks: [...prev.todoTasks, task],
+        }));
+      }
+    });
   };
 
   const defaultDark = window.matchMedia(
@@ -187,63 +262,6 @@ function App() {
     }
   };
 
-  const calculateProfit = (task) => {
-    const currentDate = new Date();
-    const daysLeft = Math.max(
-      1,
-      (new Date(task.dateline) - currentDate) / (1000 * 60 * 60 * 24)
-    );
-
-    const profit =
-      (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan);
-    return profit;
-  };
-
-  const calculateProfitDensity = (task) => {
-    const density = calculateProfit(task) / task.durasiPengerjaan;
-    console.log(density);
-    return density;
-  };
-
-  const applyGreedyAlgorithm = (greedyOption) => {
-    // Sort tasks based on the selected greedy option
-    const sortedTasks = data
-      .flatMap((board) => board.card)
-      .sort((a, b) => {
-        if (greedyOption === "Weight") {
-          return b.tingkatKemampuan - a.tingkatKemampuan;
-        } else if (greedyOption === "Profit") {
-          return b.profit - a.profit;
-        } else if (greedyOption === "Density") {
-          return calculateProfitDensity(b) - calculateProfitDensity(a);
-        }
-        return 0;
-      });
-
-    // Reset progress and todo tasks
-    setGreedyResults({
-      progressTasks: [],
-      todoTasks: [],
-    });
-
-    // Distribute tasks to progress and todo based on capacity (8 hours)
-    let remainingCapacity = 8; // 8 hours
-    sortedTasks.forEach((task) => {
-      if (remainingCapacity >= task.durasiPengerjaan) {
-        setGreedyResults((prev) => ({
-          ...prev,
-          progressTasks: [...prev.progressTasks, task],
-        }));
-        remainingCapacity -= task.durasiPengerjaan;
-      } else {
-        setGreedyResults((prev) => ({
-          ...prev,
-          todoTasks: [...prev.todoTasks, task],
-        }));
-      }
-    });
-  };
-
   useEffect(() => {
     localStorage.setItem("data-kanban", JSON.stringify(data));
   }, [data]);
@@ -304,7 +322,6 @@ function App() {
             ))}
           </div>
         </div>
-
       </div>
     </DragDropContext>
   );
