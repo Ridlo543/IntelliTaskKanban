@@ -6,7 +6,7 @@ import Dropdown from "./Dropdown";
 import Modal from "./Modal";
 import Tag from "./Tag";
 import "../styles/Card.css";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 import CardDetails from "./CardDetails";
 const Card = (props) => {
   const [dropdown, setDropdown] = useState(false);

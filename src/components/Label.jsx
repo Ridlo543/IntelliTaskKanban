@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { Check, X } from "react-feather";
 import "../styles/Label.css";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 export default function (props) {
   const input = useRef();
   const [selectedColor, setSelectedColor] = useState("");

@@ -18,7 +18,7 @@ import Modal from "./Modal";
 import "../styles/CardDetails.css";
 import { v4 as uuidv4 } from "uuid";
 import Label from "./Label";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

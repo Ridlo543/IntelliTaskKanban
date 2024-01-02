@@ -8,7 +8,7 @@ import { MoreHorizontal } from "react-feather";
 import Editable from "./Editable";
 import Dropdown from "./Dropdown";
 import { Droppable } from "react-beautiful-dnd";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 
 export default function Board(props) {
   const [show, setShow] = useState(false);

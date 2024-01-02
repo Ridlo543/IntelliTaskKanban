@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Plus, X } from "react-feather";
 import "../styles/Editable.css";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 
 const Editable = (props) => {
   const [show, setShow] = useState(props?.handler || false);

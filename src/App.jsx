@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Board from "./components/Board";
 
 import "./App.css";
-import "../bootstrap.css";
+import "./styles/bootstrap.css";
 
 function App() {
   const [data, setData] = useState(

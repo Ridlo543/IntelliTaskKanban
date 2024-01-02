@@ -1,7 +1,7 @@
 // components/Modal/Modal.jsx
 import React from "react";
 import "../styles/Modal.css";
-import "../../bootstrap.css";
+import "../styles/bootstrap.css";
 const Modal = (props) => {
   return (
     <div className="custom__modal" onClick={() => props.onClose(false)}>
