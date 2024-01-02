@@ -47,7 +47,10 @@ function App() {
     // Menghitung profit berdasarkan formula yang diberikan
     const profit =
       (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan) +
-      task.tingkatUrgensi;
+      task.tingkatUrgensi * task.durasiPengerjaan;
+
+    console.log(`Profit for task "${task.title}":`, profit);
+
     return profit;
   };
 
@@ -55,7 +58,9 @@ function App() {
   const calculateProfitDensity = (task) => {
     // Menghitung density berdasarkan profit dan durasi pengerjaan task
     const density = calculateProfit(task) / task.durasiPengerjaan;
-    console.log(density); // Log ke konsol untuk debug atau pemantauan
+
+    console.log(`Density for task "${task.title}":`, density);
+
     return density;
   };
 

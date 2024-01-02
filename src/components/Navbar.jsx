@@ -4,54 +4,57 @@ import "../styles/Navbar.css";
 import "../styles/bootstrap.css";
 
 export default function Navbar(props) {
-  const [selectedGreedyOption, setSelectedGreedyOption] = useState("Weight");
+  const [algorithmForm, setAlgorithmForm] = useState({
+    greedyOption: "Weight",
+    manualCapacity: "",
+  });
 
-  const handleGreedyOptionChange = (event) => {
-    setSelectedGreedyOption(event.target.value);
+  const handleAlgorithmFormChange = (event) => {
+    const { name, value } = event.target;
+    setAlgorithmForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleApplyGreedyAlgorithm = () => {
-    props.applyGreedyAlgorithm(selectedGreedyOption);
-  };
-
-  const [manualCapacity, setManualCapacity] = useState(""); // State untuk input manual
-
-  const handleManualCapacityChange = (event) => {
-    setManualCapacity(event.target.value);
-  };
-
-  const handleApplyManualCapacity = () => {
-    const parsedCapacity = parseInt(manualCapacity, 10);
+  const handleApplyAlgorithm = () => {
+    const parsedCapacity = parseInt(algorithmForm.manualCapacity, 10);
 
     if (!isNaN(parsedCapacity)) {
-      // Pastikan kapasitas yang dimasukkan adalah angka
-      props.applyGreedyAlgorithm("Weight", parsedCapacity); // Ganti 'Weight' sesuai kebutuhan
+      props.applyGreedyAlgorithm(algorithmForm.greedyOption, parsedCapacity);
     } else {
-      alert("Invalid capacity input. Please enter a valid number.");
+      props.applyGreedyAlgorithm(algorithmForm.greedyOption);
     }
+  };
+
+  const handleManualCapacityChange = (event) => {
+    setAlgorithmForm((prev) => ({
+      ...prev,
+      manualCapacity: event.target.value,
+    }));
   };
 
   return (
     <div className={`navbar ${props.theme === "dark" ? "dark" : ""}`}>
       <h2>intelliTask Kanban</h2>
       <div className="filter-dropdown">
-        <select onChange={handleGreedyOptionChange}>
+        <label>Algoritma:</label>
+        <select
+          name="greedyOption"
+          value={algorithmForm.greedyOption}
+          onChange={handleAlgorithmFormChange}
+        >
           <option value="Weight">Greedy (Weight)</option>
           <option value="Profit">Greedy (Profit)</option>
           <option value="Density">Greedy (Density)</option>
         </select>
-        <button onClick={handleApplyGreedyAlgorithm}>Apply</button>
-      </div>
-      <div>
+        
         <label>Kapasitas Jam:</label>
         <input
           type="text"
-          value={manualCapacity}
+          name="manualCapacity"
+          value={algorithmForm.manualCapacity}
           onChange={handleManualCapacityChange}
         />
-        <button onClick={handleApplyManualCapacity}>Apply</button>
+      <button onClick={handleApplyAlgorithm}>Apply</button>
       </div>
-
       <input
         type="checkbox"
         className="checkbox"
