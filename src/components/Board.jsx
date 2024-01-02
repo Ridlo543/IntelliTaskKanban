@@ -1,14 +1,14 @@
 // components/Board/Board.jsx
 
 import React, { useEffect, useState } from "react";
-import Card from "../Card/Card";
-import CardDetails from "../Card/CardDetails/CardDetails"; // Import CardDetails
-import "./Board.css";
+import Card from "./Card";
+import CardDetails from "./CardDetails"; // Import CardDetails
+import "../styles/Board.css";
 import { MoreHorizontal } from "react-feather";
-import Editable from "../Editable/Editable";
-import Dropdown from "../Dropdown/Dropdown";
+import Editable from "./Editable";
+import Dropdown from "./Dropdown";
 import { Droppable } from "react-beautiful-dnd";
-import "../../../bootstrap.css";
+import "../../bootstrap.css";
 
 export default function Board(props) {
   const [show, setShow] = useState(false);

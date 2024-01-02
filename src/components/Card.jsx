@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { Calendar, CheckSquare, Clock, MoreHorizontal } from "react-feather";
-import Dropdown from "../Dropdown/Dropdown";
-import Modal from "../Modal/Modal";
-import Tag from "../Tags/Tag";
-import "./Card.css";
-import "../../../bootstrap.css";
-import CardDetails from "./CardDetails/CardDetails";
+import Dropdown from "./Dropdown";
+import Modal from "./Modal";
+import Tag from "./Tag";
+import "../styles/Card.css";
+import "../../bootstrap.css";
+import CardDetails from "./CardDetails";
 const Card = (props) => {
   const [dropdown, setDropdown] = useState(false);
   const [modalShow, setModalShow] = useState(false);

@@ -1,13 +1,13 @@
-// app.jsx
+// src/App.jsx
 
 import { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import useLocalStorage from "use-local-storage";
 
-import Editable from "./components/Editable/Editable";
-import Navbar from "./components/Navbar/Navbar";
-import Board from "./components/Board/Board";
+import Editable from "./components/Editable";
+import Navbar from "./components/Navbar";
+import Board from "./components/Board";
 
 import "./App.css";
 import "../bootstrap.css";

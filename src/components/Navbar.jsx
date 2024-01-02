@@ -1,7 +1,7 @@
 // components/Navbar/Navbar.jsx
 import React, { useState } from "react";
-import "./Navbar.css";
-import "../../../bootstrap.css";
+import "../styles/Navbar.css";
+import "../../bootstrap.css";
 
 export default function Navbar(props) {
   const [selectedGreedyOption, setSelectedGreedyOption] = useState("Weight");

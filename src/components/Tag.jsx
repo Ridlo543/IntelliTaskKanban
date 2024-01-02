@@ -1,6 +1,6 @@
 import React from "react";
-import "./Tag.css";
-import "../../../bootstrap.css";
+import "../styles/Tag.css";
+import "../../bootstrap.css";
 const Tag = (props) => {
   return (
     // <div className='tag'>

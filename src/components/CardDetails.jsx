@@ -13,12 +13,12 @@ import {
   Type,
   X,
 } from "react-feather";
-import Editable from "../../Editable/Editable";
-import Modal from "../../Modal/Modal";
-import "./CardDetails.css";
+import Editable from "./Editable";
+import Modal from "./Modal";
+import "../styles/CardDetails.css";
 import { v4 as uuidv4 } from "uuid";
-import Label from "../../Label/Label";
-import "../../../../bootstrap.css";
+import Label from "./Label";
+import "../../bootstrap.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 

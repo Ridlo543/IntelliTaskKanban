@@ -1,6 +1,6 @@
 import React, { useRef,useEffect } from 'react';
-import './Dropdown.css'
-import "../../../bootstrap.css";
+import '../styles/Dropdown.css'
+import "../../bootstrap.css";
 const Dropdown = (props) => {
     const dropRef = useRef()
     const handleClick = (event) => {
