@@ -46,7 +46,8 @@ function App() {
 
     // Menghitung profit berdasarkan formula yang diberikan
     const profit =
-      (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan);
+      (1 / daysLeft) * (task.tingkatKemampuan / task.tingkatKesulitan) +
+      task.tingkatUrgensi;
     return profit;
   };
 
@@ -65,15 +66,15 @@ function App() {
    */
   const applyGreedyAlgorithm = (greedyOption, manualCapacity) => {
     // Mengurutkan tasks berdasarkan pilihan algoritma Greedy
-    const sortedTasks = data
+    const filterTask = data
       .flatMap((board) => board.card)
       .sort((a, b) => {
         if (greedyOption === "Weight") {
-          return b.tingkatKemampuan - a.tingkatKemampuan;
+          return a.durasiPengerjaan - b.durasiPengerjaan; // Mengurutkan berdasarkan durasi pengerjaan terkecil ke terbesar
         } else if (greedyOption === "Profit") {
-          return b.profit - a.profit;
+          return b.profit - a.profit; // Mengurutkan berdasarkan profit terbesar ke terkecil
         } else if (greedyOption === "Density") {
-          return calculateProfitDensity(b) - calculateProfitDensity(a);
+          return calculateProfitDensity(b) - calculateProfitDensity(a); // Mengurutkan berdasarkan density terbesar ke terkecil
         }
         return 0;
       });
@@ -86,7 +87,7 @@ function App() {
 
     // Mendistribusikan tasks ke progress dan todo berdasarkan kapasitas (8 jam)
     let remainingCapacity = manualCapacity || 8; // default 8 jam
-    sortedTasks.forEach((task) => {
+    filterTask.forEach((task) => {
       if (remainingCapacity >= task.durasiPengerjaan) {
         // Jika masih ada kapasitas, tambahkan task ke progressTasks
         setGreedyResults((prev) => ({
@@ -268,7 +269,7 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="App" data-theme={theme}>
+      <div className="App">
         <Navbar
           switchTheme={switchTheme}
           theme={theme}

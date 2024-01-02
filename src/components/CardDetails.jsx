@@ -28,11 +28,6 @@ export default function CardDetails(props) {
   const [values, setValues] = useState({
     ...props.card,
     dateline: props.card.dateline ? new Date(props.card.dateline) : new Date(),
-    // Tambahkan isian yang diminta
-    // tingkatKemampuan: 5, // Misalnya nilai awal
-    // tingkatKesulitan: 5, // Misalnya nilai awal
-    // tingkatUrgensi: 5, // Misalnya nilai awal
-    // durasiPengerjaan: 1, // Misalnya nilai awal
   });
   const [input, setInput] = useState(false);
   const [text, setText] = useState(values.title);
@@ -68,6 +63,7 @@ export default function CardDetails(props) {
       </div>
     );
   };
+
   const addTask = (value) => {
     values.task.push({
       id: uuidv4(),
@@ -128,8 +124,8 @@ export default function CardDetails(props) {
 
   const handelClickListner = (e) => {
     if (e.code === "Enter") {
-      setInput(false);
       updateTitle(text === "" ? values.title : text);
+      setInput(false);
     } else return;
   };
 
@@ -177,6 +173,7 @@ export default function CardDetails(props) {
                 {values.tags.length !== 0 ? (
                   values.tags.map((item) => (
                     <span
+                      key={item.id} // Tambahkan properti key di sini
                       className="d-flex justify-content-between align-items-center gap-2"
                       style={{ backgroundColor: item.color }}
                     >
@@ -228,7 +225,10 @@ export default function CardDetails(props) {
                 <div className="my-2">
                   {values.task.length !== 0 ? (
                     values.task.map((item, index) => (
-                      <div className="task__list d-flex align-items-start gap-2">
+                      <div
+                        key={item.id}
+                        className="task__list d-flex align-items-start gap-2"
+                      >
                         <input
                           className="task__checkbox"
                           type="checkbox"
@@ -288,7 +288,6 @@ export default function CardDetails(props) {
                   />
                 )}
                 <div className="date-picker">
-                  
                   <span className="icon__sm">
                     <Calendar />
                     Deadline

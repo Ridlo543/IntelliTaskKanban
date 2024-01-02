@@ -31,7 +31,6 @@ const Editable = (props) => {
               type={"text"}
               onChange={(e) => setText(e.target.value)}
             />
-            <br />
             {props.limitEnabled && (
               <input
                 className="limit__input"
