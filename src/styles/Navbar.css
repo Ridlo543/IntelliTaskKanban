@@ -1,7 +1,7 @@
 /* Navbar.css */
 
 .navbar {
-  padding-inline: 2rem;
+  padding: 1rem 2rem;
   border-bottom: 1px solid #ccc;
   max-height: 50px;
   display: flex;
@@ -9,6 +9,13 @@
   justify-content: space-between;
   color: var(--text-color);
   transition: background-color 200ms;
+}
+
+/* untuk ukuran hp maka perbesar paddingnya */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 2rem;
+  }
 }
 
 .checkbox {
@@ -56,13 +63,25 @@
 .filter-dropdown,
 .manual-capacity {
   display: flex;
-  align-items: center;
+  align-items: left;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-.filter-dropdown select,
+
 .filter-dropdown button,
 .manual-capacity input,
 .manual-capacity button {
+  margin-left: 10px;
+}
+
+input[type="text" i] {
+  width:35px
+}
+
+.filter-dropdown label,
+.manual-capacity label {
+  margin-right: 10px;
   margin-left: 10px;
 }
 
@@ -90,6 +109,7 @@
 .dropdown-content label {
   display: block;
   margin-bottom: 5px;
+  padding: 5px;
 }
 
 .dropdown-content select {

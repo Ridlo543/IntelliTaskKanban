@@ -35,25 +35,28 @@ export default function Navbar(props) {
     <div className={`navbar ${props.theme === "dark" ? "dark" : ""}`}>
       <h2>intelliTask Kanban</h2>
       <div className="filter-dropdown">
-        <label>Algoritma:</label>
-        <select
-          name="greedyOption"
-          value={algorithmForm.greedyOption}
-          onChange={handleAlgorithmFormChange}
-        >
-          <option value="Weight">Greedy (Weight)</option>
-          <option value="Profit">Greedy (Profit)</option>
-          <option value="Density">Greedy (Density)</option>
-        </select>
-        
-        <label>Kapasitas Jam:</label>
-        <input
-          type="text"
-          name="manualCapacity"
-          value={algorithmForm.manualCapacity}
-          onChange={handleManualCapacityChange}
-        />
-      <button onClick={handleApplyAlgorithm}>Apply</button>
+        <div>
+          <label>Algoritma:</label>
+          <select
+            name="greedyOption"
+            value={algorithmForm.greedyOption}
+            onChange={handleAlgorithmFormChange}
+          >
+            <option value="Weight">Greedy (Weight)</option>
+            <option value="Profit">Greedy (Profit)</option>
+            <option value="Density">Greedy (Density)</option>
+          </select>
+        </div>
+        <div>
+          <label>Kapasitas Jam:</label>
+          <input
+            type="text"
+            name="manualCapacity"
+            value={algorithmForm.manualCapacity}
+            onChange={handleManualCapacityChange}
+          />
+          <button onClick={handleApplyAlgorithm}>Apply</button>
+        </div>
       </div>
       <input
         type="checkbox"
