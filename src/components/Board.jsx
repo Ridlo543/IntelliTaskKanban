@@ -125,9 +125,9 @@ export default function Board(props) {
       </Droppable>
       <div className="board__footer">
         <Editable
-          name={"Add Card"}
-          btnName={"Add Card"}
-          placeholder={"Enter Card Title"}
+          name={"Add Task"}
+          btnName={"Add Task"}
+          placeholder={"Enter Task Title"}
           onSubmit={handleAddCard} // Menggunakan fungsi handleAddCard yang memunculkan modal
         />
       </div>
