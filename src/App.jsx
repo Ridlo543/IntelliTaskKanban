@@ -13,10 +13,25 @@ import "./App.css";
 import "./styles/bootstrap.css";
 
 function App() {
+  const defaultBoards = [
+    {
+      id: uuidv4(),
+      boardName: "TODO🚀",
+      card: [],
+      limit: 5,
+    },
+    {
+      id: uuidv4(),
+      boardName: "PROGRESS🔥",
+      card: [],
+      limit: 3,
+    },
+  ];
+
   const [data, setData] = useState(
     localStorage.getItem("data-kanban")
       ? JSON.parse(localStorage.getItem("data-kanban"))
-      : []
+      : defaultBoards
   );
 
   ///////////////////////////////////////////////////
