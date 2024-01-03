@@ -63,7 +63,7 @@ function App() {
 
     return density;
   };
-
+  
   /**
    * Function untuk menerapkan algoritma Greedy pada tasks.
    * @param {string} greedyOption - Pilihan algoritma Greedy ("Weight", "Profit", atau "Density").
@@ -75,11 +75,11 @@ function App() {
       .flatMap((board) => board.card)
       .sort((a, b) => {
         if (greedyOption === "Weight") {
-          return a.durasiPengerjaan - b.durasiPengerjaan; // Mengurutkan berdasarkan durasi pengerjaan terkecil ke terbesar
+          return a.durasiPengerjaan - b.durasiPengerjaan; 
         } else if (greedyOption === "Profit") {
-          return b.profit - a.profit; // Mengurutkan berdasarkan profit terbesar ke terkecil
+          return b.profit - a.profit; 
         } else if (greedyOption === "Density") {
-          return calculateProfitDensity(b) - calculateProfitDensity(a); // Mengurutkan berdasarkan density terbesar ke terkecil
+          return calculateProfitDensity(b) - calculateProfitDensity(a); 
         }
         return 0;
       });
@@ -113,6 +113,7 @@ function App() {
   const defaultDark = window.matchMedia(
     "(prefers-colors-scheme: dark)"
   ).matches;
+  
   const [theme, setTheme] = useLocalStorage(
     "theme",
     defaultDark ? "dark" : "light"
@@ -160,8 +161,6 @@ function App() {
     tempData[0].card.splice(destination.index, 0, removedCard);
     setData(tempData);
   };
-
-  // ...
 
   const addCard = (title, bid) => {
     const index = data.findIndex((item) => item.id === bid);
@@ -274,7 +273,7 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="App">
+      <div className="App" data-theme={theme}>
         <Navbar
           switchTheme={switchTheme}
           theme={theme}
@@ -291,7 +290,7 @@ function App() {
                 name={item.boardName}
                 card={item.card}
                 setName={setName}
-                setLimit={setLimit} // Tambahkan prop setLimit di sini
+                setLimit={setLimit} 
                 addCard={addCard}
                 removeCard={removeCard}
                 removeBoard={removeBoard}
